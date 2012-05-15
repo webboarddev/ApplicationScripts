@@ -1,0 +1,20 @@
+Scripts for running NCBI Blastp
+===============================
+
++ Downloading blastp:
+  + see http://www.ncbi.nlm.nih.gov/IEB/ToolBox/CPP_DOC
+
++ Scripts configuration
+  + scripts are in the scripts directory
+  + you need to configure blastp_source according to your local installation of blastp and databases
+  + you need to configure blastp_generic.sh according to the installation of blastp_source
+  + you can use testBlastp.sh to test the script, just check its configuration
+  
++ Examples
+  + two input .fasta files are provided in the examples directory
+  + input.fasta only contains one short sequence
+  + input2.fasta only contains one long sequence
+  + input3.fasta contains 20 short sequences
+
++ Databases
+  + you need to configure the .pal files in your database installation

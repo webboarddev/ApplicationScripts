@@ -1,0 +1,5 @@
+#!/bin/bash
+
+# Parametres propres au worker node
+export DatabankDir="${HOME}/Blastp/BlastpDatabank/pal"
+export BlastpPath="${HOME}/Blastp/blastp"
