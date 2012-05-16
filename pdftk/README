@@ -1,0 +1,51 @@
+ -- Repository of pdftk scripts -- 
+
+1 - List of included scripts:
+
+ - pdftk-cat.sh : Script used to concatenate two files in an file called output1.pdf
+ - pdftk-split.sh : Script used to split a file in several file
+
+These operations are performed using pdftk. For more information on pdftk, please go to : http://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/ or www.pdftk.com
+
+2 - common options
+
+Both scripts can be used with the VERBOSE environment variable. By setting it, more information are logged to the standard output
+
+3 - pdftk-cat
+
+3.1 - environment variables
+
+ - Input variables are:
+   - $INPUT_PDF_FILE_1 : (mandatory) first input pdf file
+   - $INPUT_PDF_FILE_2 : (mandatory) second input pdf file
+ - Output file is : output1.pdf and it is stored in $VISHNU_OUTPUT_DIR (mandatory)
+
+3.2 - example
+
+VERBOSE=1 INPUT_PDF_FILE_2=/path/to/input/file/test2.pdf INPUT_PDF_FILE_1=/path/to/input/file/test1.pdf VISHNU_OUTPUT_DIR=/tmp ./pdftk-cat.sh
+
+This call will:
+ - use as first input file : /path/to/input/file/test1.pdf
+ - use as second input file :  /path/to/input/file/test2.pdf
+ - put the output file (output1.pdf) to : /tmp
+ - log some information to standard output because VERBOSE=1
+
+4 - pdftk-split
+
+4.1 - environment variables
+
+ - Input variables are:
+   - $INPUT_PDF_FILE : (mandatory) input pdf file to split
+   - $OUTPUT_FILENAME_TEMPLATE : (optional) output filename template
+ - Default output filename template is : output_%02d.pdf
+ - (mandatory) Output files are stored in $VISHNU_OUTPUT_DIR
+
+4.2 - example
+
+$ VERBOSE=1 INPUT_PDF_FILE=/path/to/input/file/test.pdf VISHNU_OUTPUT_DIR=/tmp/output  OUTPUT_FILENAME_TEMPLATE=toto_%02d.pdf ./pdftk-split.sh
+
+This call will:
+ - use as input file : /path/to/input/file/test.pdf
+ - use as template for the output files : toto_%02d.pdf
+ - put the output files to : /tmp/output
+ - log some information to standard output because VERBOSE=1
