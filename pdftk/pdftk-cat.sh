@@ -40,17 +40,26 @@ fi
 
 pdftkBinary=$(which pdftk)
 
-if [ -f "$pdftkBinary" ]; then
+if [ ! -f "$pdftkBinary" ]; then
+echo "## error pdftk binary does not exist. Unable to perform needed operation"
+exit
+fi
 
-if [ "x${INPUT_PDF_FILE_1}" != "x" ] && [ -f "${INPUT_PDF_FILE_1}" ] ; then 
+if [ "x${INPUT_PDF_FILE_1}" == "x" ] || [ ! -f "${INPUT_PDF_FILE_1}" ] ; then 
+echo "## error INPUT_PDF_FILE_1(${INPUT_PDF_FILE_1}) does not exist or is not a file"
+exit
+fi
 
-# variable INPUT_PDF_FILE_1 exists and is a file
+if [ "x${INPUT_PDF_FILE_2}" == "x" ] || [ ! -f "${INPUT_PDF_FILE_2}" ] ; then 
+echo "## error INPUT_PDF_FILE_2(${INPUT_PDF_FILE_2}) does not exist or is not a file" 
+exit
+fi
 
-if [ "x${INPUT_PDF_FILE_2}" != "x" ] && [ -f "${INPUT_PDF_FILE_2}" ] ; then 
 
-# variable INPUT_PDF_FILE_2 exists and is a file
-
-if [ "x${VISHNU_OUTPUT_DIR}" != "x" ] && [ -d "${VISHNU_OUTPUT_DIR}" ] ; then
+if [ "x${VISHNU_OUTPUT_DIR}" == "x" ] || [ ! -d "${VISHNU_OUTPUT_DIR}" ] ; then
+echo "## error VISHNU_OUTPUT_DIR(${VISHNU_OUTPUT_DIR}) does not exist or is not a directory"
+exit
+fi
 
 #------------------------------------------------------------------------------
 
@@ -88,26 +97,3 @@ log "- removing temporary directory ${tmpdir}..."
 rm -rf ${tmpdir}
 
 log "- temporary directory removed"
-
-#------------------------------------------------------------------------------
-# error cases messages
-
-else
-echo "## error VISHNU_OUTPUT_DIR(${VISHNU_OUTPUT_DIR}) does not exist or is not a directory"
-fi
-
-else
-
-echo "## error INPUT_FILE_2(${INPUT_PDF_FILE_2}) does not exist or is not a file"; 
-
-fi
-
-else
-
-echo "## error INPUT_FILE_1(${INPUT_PDF_FILE_1}) does not exist or is not a file"; 
-
-fi
-
-else "## error pdftk binary does not exist. Unable to perform needed operation";
-
-fi
