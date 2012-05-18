@@ -30,11 +30,9 @@
 # Simple logging function
 
 function log {
-
-if [ "${VERBOSE}" ]; then
-echo $1
-fi
-
+    if [ "${VERBOSE}" ]; then
+        echo $1
+    fi
 }
 
 #------------------------------------------------------------------------------
@@ -46,18 +44,18 @@ fi
 pdftkBinary=$(which pdftk)
 
 if [ ! -f "$pdftkBinary" ]; then
-echo "## error pdftk binary does not exist. Unable to perform needed operation";
-exit
+    echo "## error pdftk binary does not exist. Unable to perform needed operation";
+    exit
 fi
 
 if [ "x${INPUT_PDF_FILE}" == "x" ] || [ ! -f "${INPUT_PDF_FILE}" ] ; then 
-echo "## error INPUT_PDF_FILE(${INPUT_PDF_FILE}) does not exist or is not a file"; 
-exit
+    echo "## error INPUT_PDF_FILE(${INPUT_PDF_FILE}) does not exist or is not a file"; 
+    exit
 fi
 
 if [ "x${VISHNU_OUTPUT_DIR}" == "x" ] || [ ! -d "${VISHNU_OUTPUT_DIR}" ] ; then
-echo "## error VISHNU_OUTPUT_DIR(${VISHNU_OUTPUT_DIR}) does not exist or is not a directory"
-exit
+    echo "## error VISHNU_OUTPUT_DIR(${VISHNU_OUTPUT_DIR}) does not exist or is not a directory"
+    exit
 fi
 
 if [ "x${OUTPUT_FILENAME_TEMPLATE}" == "x" ]; then
@@ -72,14 +70,17 @@ log "- using provided template for temporary dir : ${OUTPUT_FILENAME_TEMPLATE}"
 fi
 
 if [ "x${TMP_DIR_TEMPLATE}" != "x" ] ; then
+<<<<<<< HEAD
 
 TMP_DIR_TEMPLATE="/tmp/vishnu-XXXXX"
 log "- using default template for temporary dir : ${TMP_DIR_TEMPLATE}"
 
+=======
+    TMP_DIR_TEMPLATE="/tmp/vishnu-XXXXX"
+    log "- using default template for temporary dir : ${TMP_DIR_TEMPLATE}"
+>>>>>>> Code indentation
 else
-
-log "- using provided template for temporary dir : ${TMP_DIR_TEMPLATE}"
-
+    log "- using provided template for temporary dir : ${TMP_DIR_TEMPLATE}"
 fi
 
 #------------------------------------------------------------------------------
@@ -87,9 +88,7 @@ fi
 # code to execute if everything is ok
 
 log "- creating temporary directory ..."
-
 tmpdir=$(mktemp -d ${TMP_DIR_TEMPLATE})
-
 log "- temporary directory created"
 
 log "# pdftk binary path        : ${pdftkBinary}"
@@ -97,24 +96,27 @@ log "# tmp directory            : ${tmpdir}"
 log "# input pdf file           : ${INPUT_PDF_FILE}"
 log "# output filename template : ${OUTPUT_FILENAME_TEMPLATE}"
 
+<<<<<<< HEAD
 command="pdftk ${INPUT_PDF_FILE} burst output $OUTPUT_FILENAME_TEMPLATE"
+=======
+if [ "$OUTPUT_FILENAME_TEMPLATE" ]; then
+    command="pdftk ${INPUT_PDF_FILE} burst output $OUTPUT_FILENAME_TEMPLATE"
+else
+    command="pdftk ${INPUT_PDF_FILE} burst"
+fi
+>>>>>>> Code indentation
 
 log "# command                  : $command"
 
 #both variables exists and are files
 
 log "- running command ..."
-
 cd $tmpdir
-
 $($command)
-
 log "- command performed"
 
 log "- moving output file to ${VISHNU_OUTPUT_DIR} ..."
-
 mv ${tmpdir}/*.pdf ${VISHNU_OUTPUT_DIR}
-
 log "- move performed"
 
 # remove temporary directory

@@ -28,11 +28,9 @@
 # Simple logging function
 
 function log {
-
-if [ "${VERBOSE}" ]; then
-echo $1
-fi
-
+    if [ "${VERBOSE}" ]; then
+        echo $1
+    fi
 }
 
 #------------------------------------------------------------------------------
@@ -44,36 +42,31 @@ fi
 pdftkBinary=$(which pdftk)
 
 if [ ! -f "$pdftkBinary" ]; then
-echo "## error pdftk binary does not exist. Unable to perform needed operation"
-exit
+    echo "## error pdftk binary does not exist. Unable to perform needed operation"
+    exit
 fi
 
 if [ "x${INPUT_PDF_FILE_1}" == "x" ] || [ ! -f "${INPUT_PDF_FILE_1}" ] ; then 
-echo "## error INPUT_PDF_FILE_1(${INPUT_PDF_FILE_1}) does not exist or is not a file"
-exit
+    echo "## error INPUT_PDF_FILE_1(${INPUT_PDF_FILE_1}) does not exist or is not a file"
+    exit
 fi
 
 if [ "x${INPUT_PDF_FILE_2}" == "x" ] || [ ! -f "${INPUT_PDF_FILE_2}" ] ; then 
-echo "## error INPUT_PDF_FILE_2(${INPUT_PDF_FILE_2}) does not exist or is not a file" 
-exit
+    echo "## error INPUT_PDF_FILE_2(${INPUT_PDF_FILE_2}) does not exist or is not a file" 
+    exit
 fi
 
 
 if [ "x${VISHNU_OUTPUT_DIR}" == "x" ] || [ ! -d "${VISHNU_OUTPUT_DIR}" ] ; then
-echo "## error VISHNU_OUTPUT_DIR(${VISHNU_OUTPUT_DIR}) does not exist or is not a directory"
-exit
+    echo "## error VISHNU_OUTPUT_DIR(${VISHNU_OUTPUT_DIR}) does not exist or is not a directory"
+    exit
 fi
 
 if [ "x${TMP_DIR_TEMPLATE}" != "x" ] ; then
-
-TMP_DIR_TEMPLATE="/tmp/vishnu-XXXXX"
-
-log "- using default template for temporary dir : ${TMP_DIR_TEMPLATE}"
-
+    TMP_DIR_TEMPLATE="/tmp/vishnu-XXXXX"
+    log "- using default template for temporary dir : ${TMP_DIR_TEMPLATE}"
 else
-
-log "- using provided template for temporary dir : ${TMP_DIR_TEMPLATE}"
-
+    log "- using provided template for temporary dir : ${TMP_DIR_TEMPLATE}"
 fi
 
 #------------------------------------------------------------------------------
@@ -95,19 +88,14 @@ log "# command           : pdftk ${INPUT_PDF_FILE_1} ${INPUT_PDF_FILE_2} cat out
 #both variables exists and are files
 
 log "- running command ..."
-
 pdftk ${INPUT_PDF_FILE_1} ${INPUT_PDF_FILE_2} cat output ${tmpdir}/output1.pdf
-
 log "- command performed"
 
 log "- moving output file to ${VISHNU_OUTPUT_DIR} ..."
-
 mv ${tmpdir}/output1.pdf ${VISHNU_OUTPUT_DIR}
-
 log "- move performed"
 
 # remove temporary directory
-
 log "- removing temporary directory ${tmpdir}..."
 rm -rf ${tmpdir}
 
