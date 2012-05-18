@@ -60,10 +60,20 @@ echo "## error VISHNU_OUTPUT_DIR(${VISHNU_OUTPUT_DIR}) does not exist or is not 
 exit
 fi
 
+if [ "x${OUTPUT_FILENAME_TEMPLATE}" == "x" ]; then
+
+log "- using default template for temporary dir : ${OUTPUT_FILENAME_TEMPLATE}"
+OUTPUT_FILENAME_TEMPLATE="output_%02d.pdf"
+
+else
+
+log "- using provided template for temporary dir : ${OUTPUT_FILENAME_TEMPLATE}"
+
+fi
+
 if [ "x${TMP_DIR_TEMPLATE}" != "x" ] ; then
 
 TMP_DIR_TEMPLATE="/tmp/vishnu-XXXXX"
-
 log "- using default template for temporary dir : ${TMP_DIR_TEMPLATE}"
 
 else
@@ -87,11 +97,7 @@ log "# tmp directory            : ${tmpdir}"
 log "# input pdf file           : ${INPUT_PDF_FILE}"
 log "# output filename template : ${OUTPUT_FILENAME_TEMPLATE}"
 
-if [ "$OUTPUT_FILENAME_TEMPLATE" ]; then
 command="pdftk ${INPUT_PDF_FILE} burst output $OUTPUT_FILENAME_TEMPLATE"
-else
-command="pdftk ${INPUT_PDF_FILE} burst"
-fi
 
 log "# command                  : $command"
 
