@@ -10,9 +10,12 @@
 #
 # Input variables are:
 #
-# $INPUT_PDF_FILE_1 : first input pdf file
+# $INPUT_PDF_FILE_1 : (mandatory) first input pdf file
 #
-# $INPUT_PDF_FILE_2 : second input pdf file
+# $INPUT_PDF_FILE_2 : (mandatory) second input pdf file
+#
+# $TMP_DIR_TEMPLATE : (optional) template for the temporary directory used by
+# this script
 #
 # Output file is : output1.pdf and it is stored in $VISHNU_OUTPUT_DIR
 #
@@ -61,13 +64,25 @@ echo "## error VISHNU_OUTPUT_DIR(${VISHNU_OUTPUT_DIR}) does not exist or is not 
 exit
 fi
 
+if [ "x${TMP_DIR_TEMPLATE}" != "x" ] ; then
+
+TMP_DIR_TEMPLATE="/tmp/vishnu-XXXXX"
+
+log "- using default template for temporary dir : ${TMP_DIR_TEMPLATE}"
+
+else
+
+log "- using provided template for temporary dir : ${TMP_DIR_TEMPLATE}"
+
+fi
+
 #------------------------------------------------------------------------------
 
 # code to execute if everything is ok
 
 log "- creating temporary directory ..."
 
-tmpdir=$(mktemp -d /tmp/vishnu-XXXXX)
+tmpdir=$(mktemp -d ${TMP_DIR_TEMPLATE})
 
 log "- temporary directory created"
 

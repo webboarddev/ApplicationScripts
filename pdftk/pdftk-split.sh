@@ -14,6 +14,9 @@
 #
 # $OUTPUT_FILENAME_TEMPLATE : (optional) output filename template
 #
+# $TMP_DIR_TEMPLATE : (optional) template for the temporary directory used by
+# this script
+#
 # Default output filename template is : output_%02d.pdf
 #
 # Output files are stored in $VISHNU_OUTPUT_DIR
@@ -42,11 +45,32 @@ fi
 
 pdftkBinary=$(which pdftk)
 
-if [ -f "$pdftkBinary" ]; then
+if [ ! -f "$pdftkBinary" ]; then
+echo "## error pdftk binary does not exist. Unable to perform needed operation";
+exit
+fi
 
-if [ "x${INPUT_PDF_FILE}" != "x" ] && [ -f "${INPUT_PDF_FILE}" ] ; then 
+if [ "x${INPUT_PDF_FILE}" == "x" ] || [ ! -f "${INPUT_PDF_FILE}" ] ; then 
+echo "## error INPUT_PDF_FILE(${INPUT_PDF_FILE}) does not exist or is not a file"; 
+exit
+fi
 
-if [ "x${VISHNU_OUTPUT_DIR}" != "x" ] && [ -d "${VISHNU_OUTPUT_DIR}" ] ; then
+if [ "x${VISHNU_OUTPUT_DIR}" == "x" ] || [ ! -d "${VISHNU_OUTPUT_DIR}" ] ; then
+echo "## error VISHNU_OUTPUT_DIR(${VISHNU_OUTPUT_DIR}) does not exist or is not a directory"
+exit
+fi
+
+if [ "x${TMP_DIR_TEMPLATE}" != "x" ] ; then
+
+TMP_DIR_TEMPLATE="/tmp/vishnu-XXXXX"
+
+log "- using default template for temporary dir : ${TMP_DIR_TEMPLATE}"
+
+else
+
+log "- using provided template for temporary dir : ${TMP_DIR_TEMPLATE}"
+
+fi
 
 #------------------------------------------------------------------------------
 
@@ -54,7 +78,7 @@ if [ "x${VISHNU_OUTPUT_DIR}" != "x" ] && [ -d "${VISHNU_OUTPUT_DIR}" ] ; then
 
 log "- creating temporary directory ..."
 
-tmpdir=$(mktemp -d /tmp/vishnu-XXXXX)
+tmpdir=$(mktemp -d ${TMP_DIR_TEMPLATE})
 
 log "- temporary directory created"
 
@@ -93,20 +117,3 @@ log "- removing temporary directory ${tmpdir}..."
 rm -rf ${tmpdir}
 
 log "- temporary directory removed"
-
-#------------------------------------------------------------------------------
-# error cases messages
-
-else
-echo "## error VISHNU_OUTPUT_DIR(${VISHNU_OUTPUT_DIR}) does not exist or is not a directory"
-fi
-
-else
-
-echo "## error INPUT_PDF_FILE(${INPUT_PDF_FILE}) does not exist or is not a file"; 
-
-fi
-
-else "## error pdftk binary does not exist. Unable to perform needed operation";
-
-fi
