@@ -45,7 +45,7 @@ echo "#####################################################"
 # Copy output file to outputdir
 if [ "x${VISHNU_OUTPUT_DIR}" != "x" ]; then
     if [ -d "${VISHNU_OUTPUT_DIR}" ]; then
-	mv ${query_file}.out ${VISHNU_OUTPUT_DIR}
+	mv ${output_file} ${VISHNU_OUTPUT_DIR}
     else
 	echo "## error VISHNU_OUTPUT_DIR(${VISHNU_OUTPUT_DIR}) does not exist"
     fi
