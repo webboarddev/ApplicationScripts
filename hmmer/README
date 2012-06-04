@@ -1,0 +1,11 @@
+Scripts for running HMMER
+=========================
+
++ Downloading HMMER:
+  + see http://hmmer.janelia.org/
+
++ Scripts configuration
+  + scripts are in the scripts directory
+  + you can use testHmmer.sh to test the script, just check its configuration
+  
+
