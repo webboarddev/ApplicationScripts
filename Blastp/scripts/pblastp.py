@@ -1,38 +1,10 @@
 #!/usr/bin/env python                                                                                                 
-import VISHNU
 
+import ../../common/VISHNUHelper
+import ../../common/WebboardData as SubmitRequest
+
+import copy
 import os
-
-def dictToVishnu(dictionnary):
-    concat = ''
-    if dictionnary != None and dictionnary:
-        for key, value in dictionnary.iteritems():
-            if not concat == '':
-                concat += ' '
-            concat += "%s=%s" % (key,value)
-    return concat
-
-
-#Submit a job to vishnu
-def submitToVishnu(webboardDataRequest):
-    vsession = webboardDataRequest.vsession
-    machineId = webboardDataRequest.machineId
-    scriptPath = webboardDataRequest.application
-    options = dictToVishnu(webboardDataRequest.options)
-    inputFiles = dictToVishnu(webboardDataRequest.files)
-    workId = webboardDataRequest.workId
-    criterion = VISHNU.LoadCriterion()
-    
-    vishnuOptions = VISHNU.SubmitOptions()
-
-
-    vishnuOptions.setTextParams(str(options))
-    vishnuOptions.setFileParams(str(inputFiles))
-    job = VISHNU.Job()
-   
-    print "vsession %s, machine %s, application %s" % (str(vsession),str(machineId),str(scriptPath))
-    VISHNU.submitJob(str(vsession),str(machineId),scriptPath,job,vishnuOptions)
-    print job.getJobId()
 
 #Split inputFilePath in sequence set. Create new file for each in scratchDir
 def split(inputFilePath, nbSequences,scratchDir):
@@ -61,14 +33,18 @@ def split(inputFilePath, nbSequences,scratchDir):
         out.close()
         f.close()
 
-def splitAndSubmit(vsession,machineId, scriptPath,   options,  workId,inputFilePath, nbSequences,scratchDir):
-	split(inputFilePath, nbSequences,scratchDir)
-	#Read all files in scratchdir directory
-	print scratchDir
-	dirList=os.listdir(scratchDir)
-	for subSequenceFile in dirList:
-		print scratchDir +  "/"+subSequenceFile
-		submitToVishnu(vsession,machineId,scriptPath,options,scratchDir +"/"+subSequenceFile, workId)
+#Split inputFilePath into subsequence. Submit a job for each of them
+def splitAndSubmit(webboardDataRequest,scratchDir):
+    
+    split(inputFilePath, nbSequences,scratchDir)
+    #Read all files in scratchdir directory and build new submit request
+
+    dirList=os.listdir(scratchDir)
+    for subSequenceFile in dirList:
+        #Copy submitRequest origin and change the inputFilePath
+        submitRequestCopy = copy.deepcopy(submitRequest)
+        submitRequestCopy.inputFiles['query_file'] = scratchDir +"/"+subSequenceFile
+        VishnuHelper.submitToVishnu(vsession,machineId,scriptPath,options,scratchDir +"/"+subSequenceFile, workId)
 	
 def tests():
     VISHNU.vishnuInitialize(os.getenv("VISHNU_CONFIG_FILE"))
