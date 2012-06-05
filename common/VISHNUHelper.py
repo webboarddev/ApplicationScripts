@@ -14,11 +14,11 @@ def dictToVishnu(dictionnary):
 #Submit a job to vishnu
 def submitToVishnu(webboardDataRequest):
     vsession = webboardDataRequest.vsession
-    machineId = webboardDataRequest.machineId
+    machineId = webboardDataRequest.machine
     scriptPath = webboardDataRequest.application
     workId = webboardDataRequest.workId
 
-    options = dictToVishnu(webboardDataRequest.options)
+    parameters = dictToVishnu(webboardDataRequest.parameters)
     inputFiles = dictToVishnu(webboardDataRequest.files)
 
 
@@ -26,10 +26,20 @@ def submitToVishnu(webboardDataRequest):
     vishnuOptions = VISHNU.SubmitOptions()
 
 
-    vishnuOptions.setTextParams(str(options))
+    vishnuOptions.setTextParams(str(parameters))
     vishnuOptions.setFileParams(str(inputFiles))
     job = VISHNU.Job()
    
     print "vsession %s, machine %s, application %s" % (str(vsession),str(machineId),str(scriptPath))
     VISHNU.submitJob(str(vsession),str(machineId),scriptPath,job,vishnuOptions)
     print job.getJobId()
+
+def dictToVishnuTest():
+    WebData =   {'blastp_evalue': '0.00001', 'blastp_outfmt': '7', 'blastp_used_db': 'Default'}
+    VishnuData = dictToVishnu(WebData)
+    if VishnuData  != "blastp_evalue=0.00001 blastp_outfmt=7 blastp_used_db=Default" :
+        print "dictToVishnu Error VishnuData is %s", VishnuData
+    else :
+        print "dictToVishnu OK"
+
+dictToVishnuTest()
