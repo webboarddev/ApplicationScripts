@@ -1,15 +1,33 @@
 #!/usr/bin/env python                                                                                                 
 import VISHNU
+
 import os
 
-#Submit a job to vishnu
-def submitToVishnu(vsession,machineId, scriptPath,   options, inputFilePath, workId):
-    
-    criterion = VISHNU.LoadCriterion()
+def dictToVishnu(dictionnary):
+    concat = ''
+    if dictionnary != None and dictionnary:
+        for key, value in dictionnary.iteritems():
+            if not concat == '':
+                concat += ' '
+            concat += "%s=%s" % (key,value)
+    return concat
 
+
+#Submit a job to vishnu
+def submitToVishnu(webboardDataRequest):
+    vsession = webboardDataRequest.vsession
+    machineId = webboardDataRequest.machineId
+    scriptPath = webboardDataRequest.application
+    options = dictToVishnu(webboardDataRequest.options)
+    inputFiles = dictToVishnu(webboardDataRequest.files)
+    workId = webboardDataRequest.workId
+    criterion = VISHNU.LoadCriterion()
+    
     vishnuOptions = VISHNU.SubmitOptions()
+
+
     vishnuOptions.setTextParams(str(options))
-    vishnuOptions.setFileParams("query_file="+str(inputFilePath))
+    vishnuOptions.setFileParams(str(inputFiles))
     job = VISHNU.Job()
    
     print "vsession %s, machine %s, application %s" % (str(vsession),str(machineId),str(scriptPath))
@@ -69,4 +87,13 @@ def tests():
 #vsession,machineId, scriptPath,   options, inputFilePath, workId):
         
 #submitToVishnu(sessionKey,"MA_2","/home/ubuntu/Blastp/blastp_generic.sh","blastp_used_db=Default blastp_evalue=1e-5 blastp_outfmt=7","/tmp/blastp/work5/1",4)
+def dictToVishnuTest():
+    WebData =   {'blastp_evalue': '0.00001', 'blastp_outfmt': '7', 'blastp_used_db': 'Default'}
+    VishnuData = dictToVishnu(WebData)
+    if VishnuData  != "blastp_evalue=0.00001 blastp_outfmt=7 blastp_used_db=Default" :
+        print "dictToVishnu Error VishnuData is %s", VishnuData
+    else :
+        print "dictToVishnu OK"
 
+dictToVishnuTest()
+    
