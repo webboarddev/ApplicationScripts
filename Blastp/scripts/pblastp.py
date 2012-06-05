@@ -15,13 +15,14 @@ def split(inputFilePath, nbSequences,scratchDir):
     countFile = 1
     #Open the output file
     out = open(scratchDir+'/'+str(countFile),'w')
-
+    nbSequencesInt = int( nbSequences)
     try :
         for line in f:
             #new sequence start with >
+
             if line.startswith('>'):
                 countSequence = countSequence + 1
-            if countSequence <= nbSequences:
+            if countSequence <= nbSequencesInt :
                 out.write(line)
             else :
                 countSequence = 1
@@ -55,13 +56,13 @@ def tests():
     err = VISHNU.connect("root", "vishnu_user", session)
 
     sessionKey = session.getSessionKey()
-    workId = 14
+    workId = 16
     scratchDir = "/tmp/blastp/work"+ str(workId)
     try:
         os.makedirs(scratchDir)
     except os.error as e:
         print e
-    submitRequest = WebboardData(sessionKey,"MA_2",workId,"/home/ubuntu/ApplicationGit/ApplicationScripts/Blastp/scripts/blastp_generic.sh","/home/ubuntu/Blastp/pblastp.py",{'query_file': '/home/ubuntu/ApplicationGit/ApplicationScripts/Blastp/examples/input3.fasta'},{'blastp_used_db': 'Default' ,'blastp_evalue':'1e-5', 'blastp_outfmt':'7','nbSequence' :'1' })
+    submitRequest = WebboardData(sessionKey,"MA_2",workId,"/home/ubuntu/ApplicationGit/ApplicationScripts/Blastp/scripts/blastp_generic.sh","/home/ubuntu/Blastp/pblastp.py",{'query_file': '/home/ubuntu/ApplicationGit/ApplicationScripts/Blastp/examples/input3.fasta'},{'blastp_used_db': 'Default' ,'blastp_evalue':'1e-5', 'blastp_outfmt':'7','nbSequence' :'2' })
     splitAndSubmit(submitRequest,scratchDir)
 #vsession,machineId, scriptPath,   options, inputFilePath, workId):
         
