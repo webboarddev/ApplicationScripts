@@ -27,15 +27,16 @@ class WebboardData:
         return serialized
 
 def fromJson(messageSerialized):
-
-    vsession = messageSerialized['vsession']['key']
-    machine = messageSerialized['machine']
-    workId = messageSerialized['id']
-    application = messageSerialized['application']
-    preScriptPath = messageSerialized['preScriptPath']
-    files = messageSerialized['files']
-    parameters = messageSerialized['parameters']
-    
+    try:
+        vsession = messageSerialized['vsession']['key']
+        machine = messageSerialized['machine']
+        workId = messageSerialized['id']
+        application = messageSerialized['application']
+        preScriptPath = messageSerialized['preScriptPath']
+        files = messageSerialized['files']
+        parameters = messageSerialized['parameters']
+    except Exception as e :
+        print "Error in submit request data structure : %s", e
     return WebboardData(vsession,machine,workId, application, preScriptPath,files,parameters)
            
 

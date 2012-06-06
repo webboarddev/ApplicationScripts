@@ -3,10 +3,10 @@ import copy
 import os
 import sys
 
-lib_path = os.path.abspath('../../')
-sys.path.append(lib_path)
-from common.WebboardData import * 
-from common.VISHNUHelper import *
+#lib_path = os.path.abspath('../../')
+#sys.path.append(lib_path)
+from WebboardData import * 
+from VISHNUHelper import *
 import VISHNU
 #Split inputFilePath in sequence set. Create new file for each in scratchDir
 def split(inputFilePath, nbSequences,scratchDir):

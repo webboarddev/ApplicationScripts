@@ -25,15 +25,17 @@ def submitToVishnu(webboardDataRequest):
     criterion = VISHNU.LoadCriterion()    
     vishnuOptions = VISHNU.SubmitOptions()
 
-
+    vishnuOptions.setWid(workId)
     vishnuOptions.setTextParams(str(parameters))
     vishnuOptions.setFileParams(str(inputFiles))
     job = VISHNU.Job()
-   
-    print "vsession %s, machine %s, application %s" % (str(vsession),str(machineId),str(scriptPath))
-    VISHNU.submitJob(str(vsession),str(machineId),scriptPath,job,vishnuOptions)
-    print job.getJobId()
-
+    try:   
+        print "vsession %s, machine %s, application %s" % (str(vsession),str(machineId),str(scriptPath))
+        VISHNU.submitJob(str(vsession),str(machineId),scriptPath,job,vishnuOptions)
+        print job.getJobId()
+    except VISHNU.SystemException as e:
+        print e.what()
+    return job
 def dictToVishnuTest():
     WebData =   {'blastp_evalue': '0.00001', 'blastp_outfmt': '7', 'blastp_used_db': 'Default'}
     VishnuData = dictToVishnu(WebData)
