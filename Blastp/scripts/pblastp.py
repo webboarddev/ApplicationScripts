@@ -56,16 +56,21 @@ def tests():
     err = VISHNU.connect("root", "vishnu_user", session)
 
     sessionKey = session.getSessionKey()
-    workId = 16
-    scratchDir = "/tmp/blastp/work"+ str(workId)
-    try:
-        os.makedirs(scratchDir)
-    except os.error as e:
-        print e
+    workId =0
+
     submitRequest = WebboardData(sessionKey,"MA_2",workId,"/home/ubuntu/ApplicationGit/ApplicationScripts/Blastp/scripts/blastp_generic.sh","/home/ubuntu/Blastp/pblastp.py",{'query_file': '/home/ubuntu/ApplicationGit/ApplicationScripts/Blastp/examples/input3.fasta'},{'blastp_used_db': 'Default' ,'blastp_evalue':'1e-5', 'blastp_outfmt':'7','nbSequence' :'2' })
-    splitAndSubmit(submitRequest,scratchDir)
+    execute(submitRequest)
 #vsession,machineId, scriptPath,   options, inputFilePath, workId):
         
 #submitToVishnu(sessionKey,"MA_2","/home/ubuntu/Blastp/blastp_generic.sh","blastp_used_db=Default blastp_evalue=1e-5 blastp_outfmt=7","/tmp/blastp/work5/1",4)
 
-tests()
+
+def execute(submitRequest):
+    scratchDir = "/tmp/blastp/work"+ str(submitRequest.workId)
+    try:
+        os.makedirs(scratchDir)
+    except os.error as e:
+        print e
+        
+    splitAndSubmit(submitRequest,scratchDir)
+    

@@ -25,9 +25,9 @@ def submitToVishnu(webboardDataRequest):
     criterion = VISHNU.LoadCriterion()    
     vishnuOptions = VISHNU.SubmitOptions()
 
-  #  vishnuOptions.setWid(workId)
-#    vishnuOptions.setTextParams(str(parameters))
- #   vishnuOptions.setFileParams(str(inputFiles))
+    vishnuOptions.setWid(workId)
+    vishnuOptions.setTextParams(str(parameters))
+    vishnuOptions.setFileParams(str(inputFiles))
     job = VISHNU.Job()
     try:   
         
