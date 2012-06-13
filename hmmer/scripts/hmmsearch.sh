@@ -127,8 +127,12 @@ echo "tmp directory=${tmpdir}"
 if [ "${ext}" == "sto" ]; then
     query_hmmfile=${tmpdir}/${qf_basename}.hmm
     hmmbuild ${query_hmmfile} ${query_file}
-else
+elif [ "${ext}" == "hmm" ]; then
     query_hmmfile=${query_file}
+else
+    # by default, we consider that we have a .sto file
+    query_hmmfile=${tmpdir}/${qf_basename}.hmm
+    hmmbuild ${query_hmmfile} ${query_file}
 fi
 echo "Query .hmm file=${query_hmmfile}"
 
