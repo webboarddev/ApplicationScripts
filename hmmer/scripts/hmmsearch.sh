@@ -17,6 +17,8 @@
 #   + nonull2: turn off biased composition score corrections
 
 
+# This function transforms a relative path into a complete path
+# This is useful for input files, if you need to change the working dir
 function normalizePath() {
     dir=`dirname $1`
     name=`basename $1`

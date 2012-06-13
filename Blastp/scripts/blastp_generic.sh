@@ -17,8 +17,21 @@
 ## Make sure this configuration can work on all available machines
 
 # retrieve local configuration
-source $HOME/Blastp/blastp_source
+source /home/ubuntu/Source/ApplicationScripts/Blastp/scripts/blastp_source
 #####
+
+# This function transforms a relative path into a complete path
+# This is useful for input files, if you need to change the working dir
+function normalizePath() {
+    dir=`dirname $1`
+    name=`basename $1`
+    cd ${dir}
+    normdir=`pwd`
+    cd - > /dev/null 2>&1
+    echo "${normdir}/${name}"
+}
+
+query_file=`normalizePath ${query_file}`
 
 # echo parameters
 echo "query_file=${query_file}"
