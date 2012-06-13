@@ -14,9 +14,13 @@ def dictToVishnu(dictionnary):
 #Submit a job to vishnu
 def submitToVishnu(webboardDataRequest):
     vsession = webboardDataRequest.vsession
-    machineId = webboardDataRequest.machine
     scriptPath = webboardDataRequest.application
     workId = webboardDataRequest.workId
+
+    if webboardDataRequest.machine == "automatic" :
+        machineId = "autom"
+    else :
+        machineId = webboardDataRequest.machine
 
     parameters = dictToVishnu(webboardDataRequest.parameters)
     inputFiles = dictToVishnu(webboardDataRequest.files)
@@ -28,6 +32,7 @@ def submitToVishnu(webboardDataRequest):
     vishnuOptions.setWid(workId)
     vishnuOptions.setTextParams(str(parameters))
     vishnuOptions.setFileParams(str(inputFiles))
+    vishnuOptions.setSelectQueueAutom(True)
     job = VISHNU.Job()
     try:   
         
