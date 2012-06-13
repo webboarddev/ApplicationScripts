@@ -60,7 +60,7 @@ options="--notextw"
 boolean_params="acc noali cut_ga cut_nc cut_tc max nobias nonull2"
 for i in ${boolean_params}; do
     eval "var_${!i}=${!i}"
-    if [ "$var_${!i}" == "1" ]; then
+    if [ "$var_${!i}" == "true" ]; then
         options="${options} --${i}"
     fi
 done
