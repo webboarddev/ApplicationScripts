@@ -2,6 +2,8 @@
 import copy
 import os
 import sys
+import tempfile
+import shutil
 
 #lib_path = os.path.abspath('../../')
 #sys.path.append(lib_path)
@@ -66,11 +68,17 @@ def tests():
 
 
 def execute(submitRequest):
-    scratchDir = "/tmp/blastp/work"+ str(submitRequest.workId)
+    # Create temporary directory to work in
+    scratchDir = tempfile.mkdtemp(suffix="_blastpwork"+ str(submitRequest.workId))
+
     try:
         os.makedirs(scratchDir)
     except os.error as e:
         print e
-        
+
+    # Submit jobs
     splitAndSubmit(submitRequest,scratchDir)
+
+    # Delete temporary directory
+    shutil.rmtree(scratchDir)
     
