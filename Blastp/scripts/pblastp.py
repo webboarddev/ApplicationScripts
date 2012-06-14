@@ -58,7 +58,7 @@ def tests():
     sessionKey = session.getSessionKey()
     workId =0
 
-    submitRequest = WebboardData(sessionKey,"MA_2",workId,"/home/ubuntu/ApplicationGit/ApplicationScripts/Blastp/scripts/blastp_generic.sh","/home/ubuntu/Blastp/pblastp.py",{'query_file': '/home/ubuntu/ApplicationGit/ApplicationScripts/Blastp/examples/input3.fasta'},{'blastp_used_db': 'Default' ,'blastp_evalue':'1e-5', 'blastp_outfmt':'7','nbSequence' :'2' })
+    submitRequest = WebboardData(sessionKey,"cluster1",'1', '1',workId,"/home/ubuntu/ApplicationGit/ApplicationScripts/Blastp/scripts/blastp_generic.sh","/home/ubuntu/Blastp/pblastp.py",{'query_file': '/home/ubuntu/ApplicationGit/ApplicationScripts/Blastp/examples/input3.fasta'},{'blastp_used_db': 'Default' ,'blastp_evalue':'1e-5', 'blastp_outfmt':'7','nbSequence' :'2' })
     execute(submitRequest)
 #vsession,machineId, scriptPath,   options, inputFilePath, workId):
         
@@ -73,4 +73,4 @@ def execute(submitRequest):
         print e
         
     splitAndSubmit(submitRequest,scratchDir)
-    
+tests()    

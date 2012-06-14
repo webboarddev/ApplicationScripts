@@ -17,7 +17,8 @@ def submitToVishnu(webboardDataRequest):
     machineId = webboardDataRequest.machine
     scriptPath = webboardDataRequest.application
     workId = webboardDataRequest.workId
-
+    estimatedHours = webboardDataRequest.estimatedHours
+    nbcpus = webboardDataRequest.nbcpus
     parameters = dictToVishnu(webboardDataRequest.parameters)
     inputFiles = dictToVishnu(webboardDataRequest.files)
 
@@ -26,6 +27,10 @@ def submitToVishnu(webboardDataRequest):
     vishnuOptions = VISHNU.SubmitOptions()
 
     vishnuOptions.setWid(workId)
+    if(estimatedHours and estimatedHours != "0" ):
+	    vishnuOptions.setWallTime(int(estimatedHours))
+    if(nbcpus and nbcpus  !="0"):
+	    vishnuOptions.setNbCpu(int(nbcpus))
     vishnuOptions.setTextParams(str(parameters))
     vishnuOptions.setFileParams(str(inputFiles))
     job = VISHNU.Job()
