@@ -51,6 +51,11 @@ echo "Output file: ${output_file}"
 # execute blastp
 ${BlastpPath} -query ${query_file} -out ${output_file} -db ${DatabankDir}/${blastp_used_db} -evalue ${blastp_evalue} -outfmt ${blastp_outfmt}
 
+## TODO Comment the following lines when then webboard is able to retrieve the outputs
+# echo the output file
+echo "#####################################################"
+cat ${output_file}
+echo "#####################################################"
 
 # Copy output file to outputdir
 if [ "x${VISHNU_OUTPUT_DIR}" != "x" ]; then
