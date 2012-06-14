@@ -16,11 +16,7 @@ def submitToVishnu(webboardDataRequest):
     vsession = webboardDataRequest.vsession
     scriptPath = webboardDataRequest.application
     workId = webboardDataRequest.workId
-
-    if webboardDataRequest.machine == "automatic" :
-        machineId = "autom"
-    else :
-        machineId = webboardDataRequest.machine
+    machineId = webboardDataRequest.machine
 
     parameters = dictToVishnu(webboardDataRequest.parameters)
     inputFiles = dictToVishnu(webboardDataRequest.files)
@@ -33,6 +29,8 @@ def submitToVishnu(webboardDataRequest):
     vishnuOptions.setTextParams(str(parameters))
     vishnuOptions.setFileParams(str(inputFiles))
     vishnuOptions.setSelectQueueAutom(True)
+    #vishnuOptions.setNbCpu(int())
+
     job = VISHNU.Job()
     try:   
         
