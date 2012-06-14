@@ -28,7 +28,7 @@ def submitToVishnu(webboardDataRequest):
     vishnuOptions.setWid(workId)
     vishnuOptions.setTextParams(str(parameters))
     vishnuOptions.setFileParams(str(inputFiles))
-    vishnuOptions.setSelectQueueAutom(True)
+    #vishnuOptions.setSelectQueueAutom(True)
     #vishnuOptions.setNbCpu(int())
 
     job = VISHNU.Job()
