@@ -46,6 +46,7 @@ echo "tmp directory=${tmpdir}"
 cd ${tmpdir}
 qf_basename=`basename ${query_file}`
 output_file=${tmpdir}/${qf_basename}.out
+echo "Output file: ${output_file}"
 
 # execute blastp
 ${BlastpPath} -query ${query_file} -out ${output_file} -db ${DatabankDir}/${blastp_used_db} -evalue ${blastp_evalue} -outfmt ${blastp_outfmt}
@@ -56,6 +57,7 @@ cat ${output_file}
 echo "#####################################################"
 
 # Copy output file to outputdir
+echo "VISHNU_OUTPUT_DIR='${VISHNU_OUTPUT_DIR}'"
 if [ "x${VISHNU_OUTPUT_DIR}" != "x" ]; then
     if [ -d "${VISHNU_OUTPUT_DIR}" ]; then
 	mv ${output_file} ${VISHNU_OUTPUT_DIR}
