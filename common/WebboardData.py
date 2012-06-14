@@ -14,7 +14,10 @@ class WebboardData:
 
     def __init__(self, vsession,machine,estimatedHours, nbcpus,workId, application, preScriptPath, files, parameters):
         self.vsession = vsession
-        self.machine = machine
+        if machine == "automatic" :
+            self.machine = "autom"
+        else:
+            self.machine = machine
         self.workId = workId
         self.application = application
         self.preScriptPath = preScriptPath
@@ -30,7 +33,10 @@ class WebboardData:
 def fromJson(messageSerialized):
     try:
         vsession = messageSerialized['vsession']['key']
-        machine = messageSerialized['machine']
+        if messageSerialized['machine'] == "automatic" :
+            machine = "autom"
+        else:
+            machine = messageSerialized['machine']
         workId = messageSerialized['id']
 	estimatedHours = messageSerialized['estimatedHours']
 	nbcpus = messageSerialized['nbcpus']

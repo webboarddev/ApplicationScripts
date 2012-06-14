@@ -14,11 +14,12 @@ def dictToVishnu(dictionnary):
 #Submit a job to vishnu
 def submitToVishnu(webboardDataRequest):
     vsession = webboardDataRequest.vsession
-    machineId = webboardDataRequest.machine
     scriptPath = webboardDataRequest.application
     workId = webboardDataRequest.workId
     estimatedHours = webboardDataRequest.estimatedHours
     nbcpus = webboardDataRequest.nbcpus
+    machineId = webboardDataRequest.machine
+
     parameters = dictToVishnu(webboardDataRequest.parameters)
     inputFiles = dictToVishnu(webboardDataRequest.files)
 
@@ -33,6 +34,9 @@ def submitToVishnu(webboardDataRequest):
 	    vishnuOptions.setNbCpu(int(nbcpus))
     vishnuOptions.setTextParams(str(parameters))
     vishnuOptions.setFileParams(str(inputFiles))
+    #vishnuOptions.setSelectQueueAutom(True)
+    #vishnuOptions.setNbCpu(int())
+
     job = VISHNU.Job()
     try:   
         
