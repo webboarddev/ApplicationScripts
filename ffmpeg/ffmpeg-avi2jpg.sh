@@ -84,7 +84,7 @@ for image in $imagesCreated; do
 done
 
 log "- moving output file to ${VISHNU_OUTPUT_DIR} ..."
-mv ${tmpdir}/images*.jpg ${VISHNU_OUTPUT_DIR}
+mv ${tmpdir}/* ${VISHNU_OUTPUT_DIR}
 log "- move performed"
 
 # remove temporary directory
