@@ -1,0 +1,31 @@
+        ___________________________________________        
+                        scilab-5.3.3
+
+                Consortium Scilab (DIGITEO)
+              Copyright (c) 1989-2011 (INRIA)
+              Copyright (c) 1989-2007 (ENPC)
+        ___________________________________________        
+ 
+ 
+Startup execution:
+  loading initial environment
+-->hostname = unix_g("hostname");
+-->printf('Hello world from %s\n', hostname);
+Hello world from appliance2
+-->A = [1 3 5; 2 5 1; 2 3 8]
+ A  =
+ 
+    1.    3.    5.  
+    2.    5.    1.  
+    2.    3.    8.  
+-->inv(A)
+ ans  =
+ 
+  - 1.48    0.36    0.88  
+    0.56    0.08  - 0.36  
+    0.16  - 0.12    0.04  
+-->det(A)
+ ans  =
+ 
+  - 25.  
+-->quit
