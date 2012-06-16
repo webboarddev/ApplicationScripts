@@ -11,7 +11,7 @@
 #
 # $INPUT_AVI_FILE : (mandatory) input video
 #
-# Output files re : images%d and are stored in $VISHNU_OUTPUT_DIR
+# Output files are : images%d and are stored in $VISHNU_OUTPUT_DIR
 #
 # VERBOSE can also be defined to log some variables to the standard output
 #
@@ -63,14 +63,25 @@ log "- temporary directory created"
 log "# ffmpeg binary path : ${ffmpegBinary}"
 log "# tmp directory      : ${tmpdir}"
 log "# input avi file     : ${INPUT_AVI_FILE}"
-log "# command           : ffmpeg -i ${INPUT_AVI_FILE} images%d.jpg"
+log "# command           : ffmpeg -i ${INPUT_AVI_FILE} images%d.jpg &> ${tmpdir}/output.txt"
 
 #both variables exists and are files
 
 cd ${tmpdir}
 log "- running command ..."
-ffmpeg -i ${INPUT_AVI_FILE} images%d.jpg
+ffmpeg -i ${INPUT_AVI_FILE} images%d.jpg 2> ${tmpdir}/output.txt
+if [ "${VERBOSE}" ]; then
+    cat ${tmpdir}/output.txt    
+fi
+rm ${tmpdir}/output.txt
 log "- command performed"
+
+
+imagesCreated=$(ls ${tmpdir})
+log "- images created:"
+for image in $imagesCreated; do
+    log "- $image"
+done
 
 log "- moving output file to ${VISHNU_OUTPUT_DIR} ..."
 mv ${tmpdir}/images*.jpg ${VISHNU_OUTPUT_DIR}
