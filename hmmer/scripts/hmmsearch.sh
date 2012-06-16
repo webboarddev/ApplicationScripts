@@ -17,6 +17,8 @@
 #   + nonull2: turn off biased composition score corrections
 
 
+# This function transforms a relative path into a complete path
+# This is useful for input files, if you need to change the working dir
 function normalizePath() {
     dir=`dirname $1`
     name=`basename $1`
@@ -58,7 +60,7 @@ options="--notextw"
 boolean_params="acc noali cut_ga cut_nc cut_tc max nobias nonull2"
 for i in ${boolean_params}; do
     eval "var_${!i}=${!i}"
-    if [ "$var_${!i}" == "1" ]; then
+    if [ "$var_${!i}" == "true" ]; then
         options="${options} --${i}"
     fi
 done
@@ -125,8 +127,12 @@ echo "tmp directory=${tmpdir}"
 if [ "${ext}" == "sto" ]; then
     query_hmmfile=${tmpdir}/${qf_basename}.hmm
     hmmbuild ${query_hmmfile} ${query_file}
-else
+elif [ "${ext}" == "hmm" ]; then
     query_hmmfile=${query_file}
+else
+    # by default, we consider that we have a .sto file
+    query_hmmfile=${tmpdir}/${qf_basename}.hmm
+    hmmbuild ${query_hmmfile} ${query_file}
 fi
 echo "Query .hmm file=${query_hmmfile}"
 

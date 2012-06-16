@@ -18,3 +18,11 @@ Scripts for running NCBI Blastp
 
 + Databases
   + you need to configure the .pal files in your database installation
+
+
++ For the webboard:
+ + add an application with the following parameters (name, label (type, format)):
+   - blastp_used_db, Database (string, select[Default])
+   - query_file, Input file (string, file)
+   - blastp_evalue, eValue (double, textField)
+   - blastp_outfmt, outfmt (integer, textField)

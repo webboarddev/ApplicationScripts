@@ -17,8 +17,21 @@
 ## Make sure this configuration can work on all available machines
 
 # retrieve local configuration
-source $HOME/Blastp/blastp_source
+source /home/ubuntu/Source/ApplicationScripts/Blastp/scripts/blastp_source
 #####
+
+# This function transforms a relative path into a complete path
+# This is useful for input files, if you need to change the working dir
+function normalizePath() {
+    dir=`dirname $1`
+    name=`basename $1`
+    cd ${dir}
+    normdir=`pwd`
+    cd - > /dev/null 2>&1
+    echo "${normdir}/${name}"
+}
+
+query_file=`normalizePath ${query_file}`
 
 # echo parameters
 echo "query_file=${query_file}"
@@ -33,10 +46,12 @@ echo "tmp directory=${tmpdir}"
 cd ${tmpdir}
 qf_basename=`basename ${query_file}`
 output_file=${tmpdir}/${qf_basename}.out
+echo "Output file: ${output_file}"
 
 # execute blastp
 ${BlastpPath} -query ${query_file} -out ${output_file} -db ${DatabankDir}/${blastp_used_db} -evalue ${blastp_evalue} -outfmt ${blastp_outfmt}
 
+## TODO Comment the following lines when then webboard is able to retrieve the outputs
 # echo the output file
 echo "#####################################################"
 cat ${output_file}
@@ -45,12 +60,21 @@ echo "#####################################################"
 # Copy output file to outputdir
 if [ "x${VISHNU_OUTPUT_DIR}" != "x" ]; then
     if [ -d "${VISHNU_OUTPUT_DIR}" ]; then
+	echo "VISHNU_OUTPUT_DIR='${VISHNU_OUTPUT_DIR}'"
 	mv ${output_file} ${VISHNU_OUTPUT_DIR}
     else
 	echo "## error VISHNU_OUTPUT_DIR(${VISHNU_OUTPUT_DIR}) does not exist"
+        # echo the output file
+	echo "#####################################################"
+	cat ${output_file}
+	echo "#####################################################"
     fi
 else
     echo "## error VISHNU_OUTPUT_DIR not set"
+    # echo the output file
+    echo "#####################################################"
+    cat ${output_file}
+    echo "#####################################################"
 fi
 
 # remove temporary directory
