@@ -22,9 +22,9 @@
 # Simple logging function
 
 function log {
-if [ "${VERBOSE}" ]; then
-echo $1
-fi
+    if [ "${VERBOSE}" ]; then
+	echo $1
+    fi
 }
 
 #------------------------------------------------------------------------------
@@ -36,18 +36,18 @@ fi
 scilabBinary=$(which scilab)
 
 if [ ! -f "$scilabBinary" ]; then
-echo "## error scilab binary does not exist. Unable to perform needed operation"
-exit
+    echo "## error scilab binary does not exist. Unable to perform needed operation"
+    exit
 fi
 
 if [ "x${INPUT_SCILAB_FILE}" == "x" ] || [ ! -f "${INPUT_SCILAB_FILE}" ] ; then 
-echo "## error INPUT_SCILAB_FILE(${INPUT_SCILAB_FILE}) does not exist or is not a file"
-exit
+    echo "## error INPUT_SCILAB_FILE(${INPUT_SCILAB_FILE}) does not exist or is not a file"
+    exit
 fi
 
 if [ "x${VISHNU_OUTPUT_DIR}" == "x" ] || [ ! -d "${VISHNU_OUTPUT_DIR}" ] ; then
-echo "## error VISHNU_OUTPUT_DIR(${VISHNU_OUTPUT_DIR}) does not exist or is not a directory"
-exit
+    echo "## error VISHNU_OUTPUT_DIR(${VISHNU_OUTPUT_DIR}) does not exist or is not a directory"
+    exit
 fi
 
 #------------------------------------------------------------------------------
