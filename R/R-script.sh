@@ -78,6 +78,12 @@ log "- running command ..."
 R -q --vanilla < ${INPUT_R_FILE} &>  ${tmpdir}/output.txt
 log "- command performed"
 
+# TODO: remove this as soon as the webboard is able to handle outputs properly
+log "- echo outputs"
+cat ${tmpdir}/*
+log "- echo performed"
+
+
 log "- moving output file to ${VISHNU_OUTPUT_DIR} ..."
 mv ${tmpdir}/* ${VISHNU_OUTPUT_DIR}
 log "- move performed"
