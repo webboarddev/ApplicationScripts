@@ -1,17 +1,17 @@
 #! /bin/bash
 
 function abspath { 
-case "$1" in 
-/*)printf "%s\n" "$1";; 
-*)printf "%s\n" "$PWD/$1";; 
-esac; 
+    case "$1" in 
+	/*)printf "%s\n" "$1";; 
+	*)printf "%s\n" "$PWD/$1";; 
+    esac; 
 }
 
 function log {
 
-if [ "${VERBOSE}" ]; then
-echo $1
-fi
+    if [ "${VERBOSE}" ]; then
+	echo $1
+    fi
 
 }
 
@@ -32,22 +32,22 @@ mkdir -p ${VISHNU_OUTPUT_DIR}
 export SCRIPT_LOCATION_DIR=${TEST_BASE_DIR}/..
 
 
-echo "Executing test suite for pdftk"
+echo "Executing test suite for scilab"
 
 tests=$(ls ${TEST_BASE_DIR}/tests)
 
 testsCount=0
 for script in $tests; do
-testsCount=$(expr $testsCount + 1)
+    testsCount=$(expr $testsCount + 1)
 done
 
 
 echo "${testsCount} tests to perform"
 
 for script in $tests; do
-${TEST_BASE_DIR}/tests/${script}
+    ${TEST_BASE_DIR}/tests/${script}
 done
 
 if [ "x${VISHNU_OUTPUT_DIR}" != "x" ] && [ -d "${VISHNU_OUTPUT_DIR}" ] ; then
-rm -rf ${VISHNU_OUTPUT_DIR}
+    rm -rf ${VISHNU_OUTPUT_DIR}
 fi
