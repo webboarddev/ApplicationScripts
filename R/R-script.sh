@@ -62,7 +62,7 @@ tmpdir=$(mktemp -d ${HOME}/vishnu-XXXXX)
 
 log "- temporary directory created"
 
-log "# ffmpeg binary path : ${RBinary}"
+log "# R binary path : ${RBinary}"
 log "# tmp directory      : ${tmpdir}"
 log "# input R file       : ${INPUT_R_FILE}"
 log "# input data files   : ${INPUT_DATA_FILES}"
