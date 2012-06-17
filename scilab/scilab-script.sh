@@ -71,6 +71,11 @@ log "- running command ..."
 scilab -nwni -f ${INPUT_SCILAB_FILE} &>  ${tmpdir}/output.txt
 log "- command performed"
 
+# TODO remove this as soon as the webboard correctly handles outputs
+log "- echo outputs"
+cat ${tmpdir}/*
+log "- echo performed"
+
 log "- moving output file to ${VISHNU_OUTPUT_DIR} ..."
 mv ${tmpdir}/* ${VISHNU_OUTPUT_DIR}
 log "- move performed"
