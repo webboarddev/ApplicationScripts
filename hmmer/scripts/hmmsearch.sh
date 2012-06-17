@@ -113,10 +113,12 @@ echo "options=${options}"
 # Check query file extension
 qf_basename=`basename ${query_file}`
 ext=`echo ${qf_basename} | awk -F . '{print $NF}'`
-if [ "${ext}" != "hmm" -a  "${ext}" != "sto" ]; then
-    echo "## Input file is neither a .sto nor a .hmm file"
-    return 1
-fi
+
+# TODO: this check is currently disabled as Dagda modifies the name of the file
+# if [ "${ext}" != "hmm" -a  "${ext}" != "sto" ]; then
+#     echo "## Input file is neither a .sto nor a .hmm file"
+#     exit 1
+# fi
 
 # create temporary directory to work in
 tmpdir=`mktemp -d`
