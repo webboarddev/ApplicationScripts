@@ -60,7 +60,6 @@ tmpdir=$(mktemp -d ${HOME}/vishnu-XXXXX)
 
 log "- temporary directory created"
 
-log "# ffmpeg binary path : ${ffmpegBinary}"
 log "# tmp directory      : ${tmpdir}"
 log "# input scilab file  : ${INPUT_SCILAB_FILE}"
 log "# command            : scilab -nwni -f ${INPUT_SCILAB_FILE} &>  ${tmpdir}/output.txt"
