@@ -52,6 +52,7 @@ def splitAndSubmit(webboardDataRequest,scratchDir):
         submitToVishnu(submitRequestCopy)
 	
 def tests():
+    print "In tests"
     VISHNU.vishnuInitialize(os.getenv("VISHNU_CONFIG_FILE"))
     
     session = VISHNU.Session()
@@ -60,8 +61,9 @@ def tests():
     sessionKey = session.getSessionKey()
     workId =0
 
-    submitRequest = WebboardData(sessionKey,"cluster1",'1', '1',workId,"/home/ubuntu/ApplicationGit/ApplicationScripts/Blastp/scripts/blastp_generic.sh","/home/ubuntu/Blastp/pblastp.py",{'query_file': '/home/ubuntu/ApplicationGit/ApplicationScripts/Blastp/examples/input3.fasta'},{'blastp_used_db': 'Default' ,'blastp_evalue':'1e-5', 'blastp_outfmt':'7','nbSequence' :'2' })
+    submitRequest = WebboardData(sessionKey,"cluster1",'1', '1',workId,"/home/ubuntu/Source/ApplicationScripts/Blastp/scripts/blastp_generic.sh","/home/ubuntu/Source/ApplicationScripts/Blastp/scripts/pblastp.py",{'query_file': '/home/ubuntu/Source/ApplicationScripts/Blastp/examples/input3.fasta'},{'blastp_used_db': 'Default' ,'blastp_evalue':'1e-5', 'blastp_outfmt':'7','nbSequence' :'2' })
     execute(submitRequest)
+    print "out tests"
 #vsession,machineId, scriptPath,   options, inputFilePath, workId):
         
 #submitToVishnu(sessionKey,"MA_2","/home/ubuntu/Blastp/blastp_generic.sh","blastp_used_db=Default blastp_evalue=1e-5 blastp_outfmt=7","/tmp/blastp/work5/1",4)

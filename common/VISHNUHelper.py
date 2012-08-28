@@ -27,7 +27,7 @@ def submitToVishnu(webboardDataRequest):
     criterion = VISHNU.LoadCriterion()    
     vishnuOptions = VISHNU.SubmitOptions()
 
-    vishnuOptions.setWid(workId)
+    vishnuOptions.setWorkId(workId)
     if(estimatedHours and estimatedHours != "0" ):
 	    vishnuOptions.setWallTime(int(estimatedHours))
     if(nbcpus and nbcpus  !="0"):
