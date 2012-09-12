@@ -1,5 +1,5 @@
-Idées d'Applications à mettre en place:
-
+List of applications that could be added
+========================================
  - make
  - configure
  - convert
@@ -39,3 +39,14 @@ Idées d'Applications à mettre en place:
  - uuendecode
   - uuencode
   - uudecode
+
+
+Documentation
+=============
+- add a global doc
+
+Code
+====
+- comment all codes
+- provide a common template for the scripts as well as common methods
+- use the template to generate application scripts given the input variables and the script to execute
