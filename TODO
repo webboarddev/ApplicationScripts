@@ -1,5 +1,4 @@
-List of applications that could be added
-========================================
+=== List of applications that could be added
  - make
  - configure
  - convert
@@ -41,12 +40,12 @@ List of applications that could be added
   - uudecode
 
 
-Documentation
-=============
+=== Documentation
 - add a global doc
+- describe SysFera-DS contribution process
 
-Code
-====
+=== Code
 - comment all codes
 - provide a common template for the scripts as well as common methods
 - use the template to generate application scripts given the input variables and the script to execute
+
