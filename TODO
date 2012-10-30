@@ -1,4 +1,4 @@
-=== List of applications that could be added
+=== List of applications that could be added/enhanced
  - make
  - configure
  - convert
@@ -28,7 +28,6 @@
   - ffmpeg-ogm2dvd.sh
  - diff
  - cron
- - df
  - lp
  - quota
  - scilab
