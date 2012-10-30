@@ -32,7 +32,7 @@ SysFera http://www.sysfera.com
 ## License
 
 This project is licensed under the CeCILL licence.
-See the ```LICENSE`` file for more information.
+See the ``LICENSE`` file for more information.
 
 ## Contributing
 
