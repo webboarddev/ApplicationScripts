@@ -12,7 +12,7 @@ import simplejson as json
 import pickle
 class WebboardData:
 
-    def __init__(self, vsession,machine,estimatedHours, nbcpus,workId, application, preScriptPath, files, parameters):
+    def __init__(self, vsession,machine,estimatedHours, nbcpus,workId, application, preScriptPath, files, parameters,specparams):
         self.vsession = vsession
         if machine == "automatic" :
             self.machine = "autom"
@@ -25,9 +25,10 @@ class WebboardData:
         self.parameters = parameters
         self.nbcpus = nbcpus
 	self.estimatedHours = estimatedHours 
+        self.specparams = specparams
     
     def toJson(self) :
-        serialized = {'vsession': self.vsession, 'machine': self.machineId, 'estimatedHours': self.estimatedHours,'nbcpus' :self.nbcpus,'workId':self.workId, 'application' :self.application, 'preScriptPath':self.preScriptPath,'files': self.files,'parameters':self.parameters}
+        serialized = {'vsession': self.vsession, 'machine': self.machineId, 'estimatedHours': self.estimatedHours,'nbcpus' :self.nbcpus,'workId':self.workId, 'application' :self.application, 'preScriptPath':self.preScriptPath,'files': self.files,'parameters':self.parameters,'specificParams':self.specparams}
         return serialized
 
 def fromJson(messageSerialized):
@@ -44,21 +45,26 @@ def fromJson(messageSerialized):
         preScriptPath = messageSerialized['preScriptPath']
         files = messageSerialized['files']
         parameters = messageSerialized['parameters']
+	#We will read specparams from the parameters array
+	specparams = ""        
+	if 'specificParams' in parameters:
+		specparams = parameters['specificParams']     
+	#specparams = messageSerialized['specificParams']
     except Exception as e :
         print "Error in submit request data structure : %s", e
-    return WebboardData(vsession,machine,estimatedHours,nbcpus, workId, application, preScriptPath,files,parameters)
+    return WebboardData(vsession,machine,estimatedHours,nbcpus, workId, application, preScriptPath,files,parameters,specparams)
            
 
 #def fromJsonTest():
     
 def toJsonTest():
-    wbData = WebboardData("Sessionid","MA_3","1","2","id1","scriptApp1","preScript1","option1")
+    wbData = WebboardData("Sessionid","MA_3","1","2","id1","scriptApp1","preScript1","option1","truc=a test=b machin=c")
     wbDataSerialize = wbData.toJson()
     wbDataLoaded = fromJson(wbDataSerialize)
     #TODO :assert
 
 def fromJsonTest():
-    wbDataSerialized = {'files': {'query_file': '/opt/sysfera/uploads/3d5805b5-0b54-4bfd-a324-b35bbf6ee7d8-script'}, 'parameters': {'blastp_evalue': '0.00001', 'blastp_outfmt': '7', 'blastp_used_db': 'Default'}, 'machine': 'MA_2', 'application': '/opt/sysfera/pblastp', 'vsession': {'vsessionid': 'webboard-session-0', 'key': '3e05aac7-e5d4-458b-9510-f93bb5ce257e'}, 'identifier': '258b5de0-b1c3-42d5-834b-edca7272326c', 'id': 1,'preScriptPath': '/opt/sysfera/pblastp','estimatedHours': '1', 'nbcpus':'1'}
+    wbDataSerialized = {'files': {'query_file': '/opt/sysfera/uploads/3d5805b5-0b54-4bfd-a324-b35bbf6ee7d8-script'}, 'parameters': {'blastp_evalue': '0.00001', 'blastp_outfmt': '7', 'blastp_used_db': 'Default'}, 'machine': 'MA_2', 'application': '/opt/sysfera/pblastp', 'vsession': {'vsessionid': 'webboard-session-0', 'key': '3e05aac7-e5d4-458b-9510-f93bb5ce257e'}, 'identifier': '258b5de0-b1c3-42d5-834b-edca7272326c', 'id': 1,'preScriptPath': '/opt/sysfera/pblastp','estimatedHours': '1', 'nbcpus':'1', 'specificParams':'truc=a test=b machin=c' }
     wbData = fromJson(wbDataSerialized)
     if wbData.vsession != "3e05aac7-e5d4-458b-9510-f93bb5ce257e" :
         print "fromJsonTest Error. Key is %s . Expected : 3e05aac7-e5d4-458b-9510-f93bb5ce257e ", wbData.vsession
