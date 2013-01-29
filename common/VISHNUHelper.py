@@ -11,13 +11,18 @@ def dictToVishnu(dictionnary):
     return concat
 
 
+class ErrorHandler:
+  def __init__(self):
+    self.submitStatus = ""
+    
+
 #Submit a job to vishnu
 def submitToVishnu(webboardDataRequest,errorHandler=None):
 
     myErrorHandler = errorHandler
 
     if (myErrorHandler == None ):
-	    myErrorHandler = {}
+	    myErrorHandler = ErrorHandler()
 
     myErrorHandler.submitStatus = ""
 
@@ -29,6 +34,7 @@ def submitToVishnu(webboardDataRequest,errorHandler=None):
     machineId = webboardDataRequest.machine
 
     specparams = webboardDataRequest.specparams
+    memory = webboardDataRequest.memory
 
     parameters = dictToVishnu(webboardDataRequest.parameters)
     inputFiles = dictToVishnu(webboardDataRequest.files)
@@ -45,10 +51,18 @@ def submitToVishnu(webboardDataRequest,errorHandler=None):
     vishnuOptions.setTextParams(str(parameters))
     vishnuOptions.setFileParams(str(inputFiles))
     
+    #Handling optional values
+
+    #memory
+    if (memory and memory != "0"):
+      vishnuOptions.setMemory(memory)
+    
+    #specific params
     if (specparams != ""):
         vishnuOptions.setSpecificParams(str(specparams))
         print "Specific parameters : ", str(specparams)
 	
+    #end optional
 
     #vishnuOptions.setSelectQueueAutom(True)
     #vishnuOptions.setNbCpu(int())
