@@ -12,53 +12,67 @@ import simplejson as json
 import pickle
 class WebboardData:
 
-    def __init__(self, vsession,machine,estimatedHours, nbcpus,workId, application, preScriptPath, files, parameters,specparams):
+    def __init__(self, vsession,machine,estimatedHours, nbcpus,workId, application, preScriptPath, files, parameters,specparams,memory):
         self.vsession = vsession
         if machine == "automatic" :
-            self.machine = "autom"
+          self.machine = "autom"
         else:
-            self.machine = machine
+          self.machine = machine
         self.workId = workId
         self.application = application
         self.preScriptPath = preScriptPath
         self.files = files
         self.parameters = parameters
         self.nbcpus = nbcpus
-	self.estimatedHours = estimatedHours 
+        self.estimatedHours = estimatedHours 
         self.specparams = specparams
+        self.memory = memory
     
     def toJson(self) :
-        serialized = {'vsession': self.vsession, 'machine': self.machineId, 'estimatedHours': self.estimatedHours,'nbcpus' :self.nbcpus,'workId':self.workId, 'application' :self.application, 'preScriptPath':self.preScriptPath,'files': self.files,'parameters':self.parameters,'specificParams':self.specparams}
+        serialized = {'vsession': self.vsession, 'machine': self.machineId, 'estimatedHours': self.estimatedHours,'nbcpus' :self.nbcpus,'workId':self.workId, 'application' :self.application, 'preScriptPath':self.preScriptPath,'files': self.files,'parameters':self.parameters,'specificParams':self.specparams,'memory':self.memory}
         return serialized
 
 def fromJson(messageSerialized):
-    try:
-        vsession = messageSerialized['vsession']['key']
-        if messageSerialized['machine'] == "automatic" :
-            machine = "autom"
-        else:
-            machine = messageSerialized['machine']
-        workId = messageSerialized['id']
-	estimatedHours = messageSerialized['estimatedHours']
-	nbcpus = messageSerialized['nbcpus']
-        application = messageSerialized['application']
-        preScriptPath = messageSerialized['preScriptPath']
-        files = messageSerialized['files']
-        parameters = messageSerialized['parameters']
-	#We will read specparams from the parameters array
-	specparams = ""        
-	if 'specificParams' in parameters:
-		specparams = parameters['specificParams']     
-	#specparams = messageSerialized['specificParams']
-    except Exception as e :
-        print "Error in submit request data structure : %s", e
-    return WebboardData(vsession,machine,estimatedHours,nbcpus, workId, application, preScriptPath,files,parameters,specparams)
+  try:
+    vsession = messageSerialized['vsession']['key']
+    if messageSerialized['machine'] == "automatic" :
+      machine = "autom"
+    else:
+      machine = messageSerialized['machine']
+    workId = messageSerialized['id']
+    estimatedHours = messageSerialized['estimatedHours']
+    application = messageSerialized['application']
+    preScriptPath = messageSerialized['preScriptPath']
+    files = messageSerialized['files']
+
+    #maybe we should add this to the next section?
+    nbcpus = messageSerialized['nbcpus']
+
+    parameters = messageSerialized['parameters']
+    ################################################
+    # We are now parsing the "parameters" map : 
+    # reserved entries will become vishnu options.
+    ################################################
+    specparams = ""
+    memory = ""
+    #Specific params
+    if 'specificParams' in parameters:
+      specparams = parameters['specificParams']
+    #memory
+    if 'memory' in parameters:
+      memory = parameters['memory']
+
+    #end of parsing
+
+  except Exception as e:
+    print "Error in submit request data structure : %s", e
+  return WebboardData(vsession,machine,estimatedHours,nbcpus, workId, application, preScriptPath,files,parameters,specparams,memory)
            
 
 #def fromJsonTest():
     
 def toJsonTest():
-    wbData = WebboardData("Sessionid","MA_3","1","2","id1","scriptApp1","preScript1","option1","truc=a test=b machin=c")
+    wbData = WebboardData("Sessionid","MA_3","1","2","id1","scriptApp1","preScript1","option1","truc=a test=b machin=c","1024")
     wbDataSerialize = wbData.toJson()
     wbDataLoaded = fromJson(wbDataSerialize)
     #TODO :assert
