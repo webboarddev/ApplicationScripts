@@ -1,0 +1,5 @@
+#!/bin/bash
+
+# Parametres propres au worker node
+# Valeur par défaut à adapter lors de l'install.
+export DisseqPath="${HOME}/Desktop/Decrypthon3/bin/disseq"
